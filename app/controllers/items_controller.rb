@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @items = collection_root
   end
 
   # GET /items/1
@@ -12,9 +12,22 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def recommended
+    @items = Item.where(recommended: true)
+    render action: :index
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
+    end
+
+    def collection_root
+      if params[:category_id]
+        Category.find(params[:category_id]).items
+      else
+        Item.all
+      end
     end
 end

@@ -1,0 +1,7 @@
+%h1 Category list
+
+%ul.categories
+  - @categories.each do |category|
+    %li.category
+      %h2= link_to category.name, category_items_path(category)
+      // = image_tag(category.image_url)
